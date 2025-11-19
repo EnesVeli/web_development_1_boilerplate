@@ -6,20 +6,28 @@
  * PHP has several global variables that are available in all scopes.
  * 
  * 
- * $_SERVER is a PHP superglobal array that holds information about the server, the request, and the current script. It includes details like the client’s IP address, request method, headers, and file paths. Developers use it to access environment data such as URLs, server names, and execution settings.
+ * $_SERVER is a PHP superglobal array that holds information about the server, 
+ * the request, and the current script. It includes details like the client’s IP address, 
+ * request method, headers, and file paths. Developers use it to access environment data such
+ * as URLs, server names, and execution settings.
  * 
  * Which $_SERVER variable can we use to determine the request method?
  * 
  * TODO: 
- *  In the if statement, use the appropriate $_SERVER variable to check if the request method is POST.
+ *  In the if statement, use the appropriate $_SERVER variable to 
+ *  check if the request method is POST.
  *  If it is, process the form submission.
  *  If it is not, display the contact form.
  *  Identify where the post data is set and displayed.
  *  Use `var_dump()` and `die()` to inspect contents of $_POST.
- *  Note: Use of `htmlspecialchars`. Research why this is used here when displaying user supplied data in the browser.
+ *  Note: Use of `htmlspecialchars`. Research why this is used here when 
+ *  displaying user supplied data in the browser.
  */
+//var_dump($_SERVER);
+//die();
 
-if (FALSE) {
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Collect and sanitize input
     $name = htmlspecialchars(trim($_POST['name'] ?? ''));
     $email = htmlspecialchars(trim($_POST['email'] ?? ''));

@@ -20,6 +20,9 @@
  *  Right-click in the browser and select "View Page Source" to see the output of `var_dump` clearly.
  */
 
+//var_dump($_GET);
+//die();
+
 /** 
  * After inspecting the `$_GET` variable, remove the `var_dump` and `die` statements and do the following:
  *  Use the `name` and `age` parameter from the `$_GET` variable to personalize the greeting message.
@@ -29,12 +32,24 @@
  */
 
 // Note the `echo` outputs text to the HTTP response body directly (you will see this in the browser).
-echo 'Hello world!';
+//echo 'Hello Alice, you are 23 years old!';
 
 // Note: PHP is a templating language, so you can mix HTML and PHP code in the same file.
 // To start writing HTML, just close the PHP tag like this:
 
 // View source code in the browser to see the HTML output. Anything missing? 😱😱😱
+$name = "whoever you are";
+$age = "unknown";
+
+if (!empty($_GET["name"])) {
+    $name = $_GET["name"];
+}
+
+if (!empty($_GET["age"])) {
+    $age = $_GET["age"];
+}
+echo "Hello $name (Age: $age)!";
+
 
 ?>
 
