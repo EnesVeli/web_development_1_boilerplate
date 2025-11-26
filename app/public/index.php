@@ -18,8 +18,12 @@ use function FastRoute\simpleDispatcher;
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
     $r->addRoute('GET', '/hello/{name}', ['App\Controllers\HelloController', 'greet']);
+    
+    // WEEK 2 ROUTES
+    $r->addRoute('GET', '/guestbook', ['App\Controllers\GuestbookController', 'getAll']);
+    $r->addRoute('POST', '/guestbook', ['App\Controllers\GuestbookController', 'create']);
+    $r->addRoute('GET', '/articles', ['App\Controllers\ArticleController', 'index']);
 });
-
 
 /**
  * Get the request method and URI from the server variables and invoke the dispatcher.
@@ -52,13 +56,6 @@ switch ($routeInfo[0]) {
 
         $controller = new $class();
         $controller->$method($vars);
-
-
-        $dispatcher = simpleDispatcher(function(RouteCollector $r) {
-            $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
-            $r->addRoute('GET', '/hello/{name}', ['App\Controllers\HelloController', 'greet']);
-            $r->addRoute('GET', '/guestbook', ['App\Controllers\GuestbookController', 'greatAll']);
-        });
 
         break;
 
