@@ -1,64 +1,38 @@
 <?php
-
-/**
- * This is the central route handler of the application.
- * It uses FastRoute to map URLs to controller methods.
- * 
- * See the documentation for FastRoute for more information: https://github.com/nikic/FastRoute
- */
-
 require __DIR__ . '/../vendor/autoload.php';
 
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
-/**
- * Define the routes for the application.
- */
+// 1. Define Routes (Bootstrap Exercise uses ProductController)
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
-    $r->addRoute('GET', '/hello/{name}', ['App\Controllers\HelloController', 'greet']);
-    
-    // WEEK 2 ROUTES
-    $r->addRoute('GET', '/guestbook', ['App\Controllers\GuestbookController', 'getAll']);
-    $r->addRoute('POST', '/guestbook', ['App\Controllers\GuestbookController', 'create']);
-    $r->addRoute('GET', '/articles', ['App\Controllers\ArticleController', 'index']);
+    $r->addRoute('GET', '/', ['App\Controllers\ProductController', 'index']);
+    $r->addRoute('GET', '/product/{id}', ['App\Controllers\ProductController', 'get']);
 });
 
-/**
- * Get the request method and URI from the server variables and invoke the dispatcher.
- */
+// 2. Dispatch
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
-/**
- * Switch on the dispatcher result and call the appropriate controller method if found.
- */
+// 3. Handle Route
 switch ($routeInfo[0]) {
-    // Handle not found routes
     case FastRoute\Dispatcher::NOT_FOUND:
         http_response_code(404);
-        echo 'Not Found';
+        echo '404 Not Found';
         break;
-    // Handle routes that were invoked with the wrong HTTP method
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         http_response_code(405);
-        echo 'Method Not Allowed';
+        echo '405 Method Not Allowed';
         break;
-    // Handle found routes
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-
+        
+        // Instantiate the controller and call the method
         $class = $handler[0];
         $method = $handler[1];
-
         $controller = new $class();
         $controller->$method($vars);
-
         break;
-
-        // TODO: pass the dynamic route data to the controller method
-        // When done, visiting `http://localhost/hello/dan-the-man` should output "Hi, dan-the-man!"
 }
