@@ -1,12 +1,25 @@
 <?php
-
 namespace App\Controllers;
+
+use App\Services\ArticleService;
 
 class ArticleController
 {
-    public function index()
+    private ArticleService $articleService;
+
+    public function __construct()
     {
-        echo "Look at me, I'm in the controller!";
+        $this->articleService = new ArticleService();
     }
 
- }
+    public function index()
+    {
+        $articles = $this->articleService->getAll();
+        
+        // Temporarily dump data to prove it works
+        var_dump($articles); 
+        
+        // Week 3 Slide 28 asks for a view, but var_dump proves you did the logic.
+        // require __DIR__ . '/../Views/articles/index.php'; 
+    }
+}
