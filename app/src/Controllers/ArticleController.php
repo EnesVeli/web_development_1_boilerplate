@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Services\ArticleService;
@@ -14,12 +15,10 @@ class ArticleController
 
     public function index()
     {
+        // 1. Get data
         $articles = $this->articleService->getAll();
-        
-        // Temporarily dump data to prove it works
-        var_dump($articles); 
-        
-        // Week 3 Slide 28 asks for a view, but var_dump proves you did the logic.
-        // require __DIR__ . '/../Views/articles/index.php'; 
+
+        // 2. Load the view (pass $articles so the view can see it)
+        require __DIR__ . '/../Views/articles/index.php';
     }
 }
