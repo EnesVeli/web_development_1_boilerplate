@@ -10,7 +10,6 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
 # Allow running Composer as root within the container
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
