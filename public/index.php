@@ -13,8 +13,8 @@ use App\Controllers\HomeController;
 
 // Define the Routes
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
+    // The Homepage
     $r->addRoute('GET', '/', [HomeController::class, 'index']);
-    
 });
 
 // Fetch method and URI from Server
